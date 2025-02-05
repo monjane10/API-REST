@@ -79,4 +79,36 @@ app.get('/selecoes/:id', (req, res) => {
 
   });
 
+  app.delete('/selecoes/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const index = selecoes.findIndex(s => s.id === id);
+  
+    if (index !== -1) {
+      selecoes.splice(index, 1);
+      res.status(200).send({ message: `Selecao com id ${id} removida com sucesso.` });
+    } else {
+      res.status(404).send({ message: 'Selecao não encontrada.' });
+    }
+  });
+
+  app.put('/selecoes/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const { nome, grupo } = req.body;
+    
+    const selecao = selecoes.find(s => s.id === id);
+  
+    if (!selecao) {
+      return res.status(404).send({ message: 'Selecao não encontrada.' });
+    }
+  
+    if (!nome || !grupo) {
+      return res.status(400).send("Os campos nome e grupo são obrigatórios para edição.");
+    }
+  
+    selecao.nome = nome;
+    selecao.grupo = grupo;
+  
+    res.status(200).send({ message: 'Selecao atualizada com sucesso.', selecao });
+  });
+
 export default app;
