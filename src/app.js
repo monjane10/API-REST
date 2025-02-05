@@ -49,14 +49,23 @@ const selecoes = [
     {id: 41, nome: "Tunísia", grupo: "B"},
 ]
 
-app.get('/', (req, res) =>{
-    res.send("Olá Mundo, Sou o Node");
-});
+// Metodo para adicionar uma selecao
+app.post('/selecoes', (req, res) => {
+    const {id, nome, grupo} = req.body;
+    if(!id || !nome || !grupo){
+       res.status(400).send("os campos id, nome e grupo são obrigatórios");
+    }
+    const selecao = req.body;
+    selecoes.push(selecao);
+    res.status(201).send("Selecao adicionada com sucesso:" + selecao);
 
+ });
+
+//metodo para listar as selecoes
 app.get('/selecoes', (req, res) =>{
     res.status(200).send(selecoes);
 });
-
+//metodo para listar selecoes por Id
 app.get('/selecoes/:id', (req, res) => {
     const id = parseInt(req.params.id); 
     const selecao = selecoes.find(s => s.id === id);
@@ -68,29 +77,7 @@ app.get('/selecoes/:id', (req, res) => {
     }
   });
 
-  app.post('/selecoes', (req, res) => {
-     const {id, nome, grupo} = req.body;
-     if(!id || !nome || !grupo){
-        res.status(400).send("os campos id, nome e grupo são obrigatórios");
-     }
-     const selecao = req.body;
-     selecoes.push(selecao);
-     res.status(201).send("Selecao adicionada com sucesso:" + selecao);
-
-  });
-
-  app.delete('/selecoes/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const index = selecoes.findIndex(s => s.id === id);
-  
-    if (index !== -1) {
-      selecoes.splice(index, 1);
-      res.status(200).send({ message: `Selecao com id ${id} removida com sucesso.` });
-    } else {
-      res.status(404).send({ message: 'Selecao não encontrada.' });
-    }
-  });
-
+  //metodo para actualizar selecao
   app.put('/selecoes/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const { nome, grupo } = req.body;
@@ -110,5 +97,19 @@ app.get('/selecoes/:id', (req, res) => {
   
     res.status(200).send({ message: 'Selecao actualizada com sucesso.', selecao });
   });
+
+  //metodo para apagar selecao
+  app.delete('/selecoes/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const index = selecoes.findIndex(s => s.id === id);
+  
+    if (index !== -1) {
+      selecoes.splice(index, 1);
+      res.status(200).send({ message: `Selecao com id ${id} removida com sucesso.` });
+    } else {
+      res.status(404).send({ message: 'Selecao não encontrada.' });
+    }
+  });
+
 
 export default app;
