@@ -9,4 +9,5 @@ const conexao = mysql.createConnection({
     database: 'mundial_db'
 });
 
+conexao.connect();
 export default conexao;
