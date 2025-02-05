@@ -108,7 +108,7 @@ app.get('/selecoes/:id', (req, res) => {
     selecao.nome = nome;
     selecao.grupo = grupo;
   
-    res.status(200).send({ message: 'Selecao atualizada com sucesso.', selecao });
+    res.status(200).send({ message: 'Selecao actualizada com sucesso.', selecao });
   });
 
 export default app;
