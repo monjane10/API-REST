@@ -1,8 +1,6 @@
-import app from './src/app.js'
+import app from './app.js'
 
 const PORTA = 3000;
-
-
 
  //Escutar a porta 3000
  app.listen(PORTA, () =>{
