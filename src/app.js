@@ -15,7 +15,6 @@ app.post('/selecoes', (req, res) => {
             res.status(201).json(resultado);
         }
     });
-
  });
 
 //metodo para listar as selecoes
@@ -56,7 +55,6 @@ app.get('/selecoes/:id', (req, res) => {
             res.status(200).json(resultado);
         }
     });
-
   });
 
   //metodo para apagar selecao
@@ -71,6 +69,5 @@ app.get('/selecoes/:id', (req, res) => {
         }
     });
   });
-
-
+  
 export default app;
