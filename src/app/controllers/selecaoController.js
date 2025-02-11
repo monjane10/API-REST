@@ -1,62 +1,34 @@
-import conexao from '../database/conexao.js';
+import selecaoRepository from '../repositories/selecaoRepository.js';
+
 class SelecaoController {
     
-    index(req, res) {
-        const sql = "SELECT * FROM selecoes;"
-        conexao.query(sql, (erro, resultado) => {
-            if (erro){
-                res.status(404).json({'Erro': 'Dados não encontrados!', erro});
-            } else {
-                res.status(200).json(resultado);
-            }
-        });
+    async index(req, res) {
+        const row = await selecaoRepository.findAll();
+        res.json(row);
        
     }
-    show(req, res)  {
-        const id = parseInt(req.params.id); 
-        const sql = "SELECT * FROM selecoes WHERE id=?;"
-        conexao.query(sql, id, (erro, resultado) => {
-            const linha = resultado[0]
-            if (erro){
-                res.status(404).json({'Erro': 'Dados não encontrados!', erro});
-            } else {
-                res.status(200).json(linha);
-            }
-        });
+     async show(req, res)  {
+        const id = parseInt(req.params.id)
+       const row = await selecaoRepository.findById(id);
+       res.json(row);
       }
-    store(req, res) {
+    async store(req, res) {
         const selecao = req.body; 
-        const sql = "INSERT INTO selecoes SET?;"
-        conexao.query(sql, selecao, (erro, resultado) => {
-            if (erro){
-                res.status(400).json({'Erro': 'Erro ao adicionar seleção!', erro});
-            } else {
-                res.status(201).json(resultado);
-            }
-        });
+        const row = await selecaoRepository.create(selecao);
+        res.json(row);
+       
      }
-    update(req, res)  { 
+    async update(req, res)  { 
         const id = parseInt(req.params.id); 
         const selecao = req.body; 
-        const sql = "UPDATE selecoes SET? WHERE id=?;"
-        conexao.query(sql, [selecao, id], (erro, resultado) => {
-            if (erro){
-                res.status(400).json({'Erro': 'Erro ao actualizar seleção!', erro});
-            } else {
-                res.status(200).json(resultado);
-            }
-        });
+        const row = await selecaoRepository.update(selecao, id);
+        res.json(row);
+       
       }
-    delete(req, res) {
-        const id = parseInt(req.params.id); 
-        const sql = "DELETE FROM selecoes WHERE id=?;"
-        conexao.query(sql, id, (erro, resultado) => {
-            if (erro){
-                res.status(404).json({'Erro': 'Dados não encontrados!', erro});
-            } else {
-                res.status(200).json(resultado);
-            }
-        });
+    async delete(req, res) {
+       const id = parseInt(req.params.id); 
+       const row = await selecaoRepository.delete(id);
+       res.json(row);
       }
 }
 
