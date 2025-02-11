@@ -8,7 +8,7 @@ class SelecaoController {
        
     }
      async show(req, res)  {
-        const id = parseInt(req.params.id)
+        const id = parseInt(req.params.id);
        const row = await selecaoRepository.findById(id);
        res.json(row);
       }
