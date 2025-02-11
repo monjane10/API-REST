@@ -4,7 +4,7 @@ import conexao from '../infra/conexao.js';
 const app = express();
 app.use(express.json()); 
 
-// Metodo para adicionar uma selecao
+
 app.post('/selecoes', (req, res) => {
     const selecao = req.body; 
     const sql = "INSERT INTO selecoes SET?;"
@@ -17,7 +17,6 @@ app.post('/selecoes', (req, res) => {
     });
  });
 
-//metodo para listar as selecoes
 app.get('/selecoes', (req, res) =>{
     const sql = "SELECT * FROM selecoes;"
     conexao.query(sql, (erro, resultado) => {
@@ -29,7 +28,7 @@ app.get('/selecoes', (req, res) =>{
     });
    
 });
-//metodo para listar selecoes por Id
+
 app.get('/selecoes/:id', (req, res) => {
     const id = parseInt(req.params.id); 
     const sql = "SELECT * FROM selecoes WHERE id=?;"
@@ -43,7 +42,7 @@ app.get('/selecoes/:id', (req, res) => {
     });
   });
 
-  //metodo para actualizar selecao
+
   app.put('/selecoes/:id', (req, res) => { 
     const id = parseInt(req.params.id); 
     const selecao = req.body; 
@@ -57,7 +56,7 @@ app.get('/selecoes/:id', (req, res) => {
     });
   });
 
-  //metodo para apagar selecao
+
   app.delete('/selecoes/:id', (req, res) => {
     const id = parseInt(req.params.id); 
     const sql = "DELETE FROM selecoes WHERE id=?;"
